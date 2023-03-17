@@ -18,7 +18,6 @@ public class TaskController {
 
     @PostMapping
     public Task addNewTask(@RequestBody Task task) {
-        System.out.println(task.getDescription());
         return new Task(task.getId(), task.getDescription(), task.getUser());
     }
 
