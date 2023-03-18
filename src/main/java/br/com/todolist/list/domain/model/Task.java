@@ -15,6 +15,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+    private Boolean completed = Boolean.FALSE;
 
     @OneToOne
     private User user;
