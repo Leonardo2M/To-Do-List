@@ -3,6 +3,7 @@ package br.com.todolist.list.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,5 +21,5 @@ public class User {
     private String password;
 
     @OneToMany
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 }
