@@ -3,6 +3,8 @@ package br.com.todolist.list.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tasks")
 @AllArgsConstructor
@@ -16,8 +18,10 @@ public class Task {
     private Long id;
     private String description;
     private Boolean completed = Boolean.FALSE;
+    private LocalDateTime date;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
 }
