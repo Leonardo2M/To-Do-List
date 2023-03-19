@@ -1,1 +1,5 @@
-CREATE TABLE users(id int primary key,username varchar(100),password varchar(100));
+CREATE TABLE users(
+    id bigint not null auto_increment,
+    username varchar(100) not null unique,
+    password varchar(100) not null,
+    primary key (id));
