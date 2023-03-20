@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -20,5 +21,10 @@ public class TaskService {
         var task = new Task(null, data.getDescription(), null, LocalDateTime.now(),null);
         repository.save(task);
         return ResponseEntity.ok().body(task);
+    }
+
+    public ResponseEntity<List<Task>> listTasks() {
+        var tasks = repository.findAll();
+        return ResponseEntity.ok().body(tasks);
     }
 }

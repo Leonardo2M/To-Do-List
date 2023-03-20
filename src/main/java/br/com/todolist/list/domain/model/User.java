@@ -1,5 +1,6 @@
 package br.com.todolist.list.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,6 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
 }

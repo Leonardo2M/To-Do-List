@@ -19,11 +19,11 @@ public class TaskController {
         this.service = service;
     }
 
-    //    @GetMapping
-//    public List<Task> list() {
-//        return Arrays.asList(new Task(2L, "task 2", null, new User()), new Task(1L, "task 1", null, new User()));
-//    }
-//
+    @GetMapping
+    public ResponseEntity<List<Task>> list() {
+        return service.listTasks();
+    }
+
     @PostMapping
     public ResponseEntity<Task> addNewTask(@RequestBody Task data) {
         return service.addTask(data);
