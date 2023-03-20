@@ -23,4 +23,5 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
+
 }
