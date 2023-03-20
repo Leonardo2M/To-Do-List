@@ -2,10 +2,10 @@ package br.com.todolist.list.controller;
 
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -17,6 +17,12 @@ public class UserController {
 
     public UserController(UserService service) {
         this.service = service;
+    }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<User> create(@RequestBody User data, UriComponentsBuilder uri) {
+        return service.createUser(data, uri);
     }
 
     @GetMapping
