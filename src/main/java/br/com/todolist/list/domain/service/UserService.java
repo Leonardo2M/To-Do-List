@@ -16,7 +16,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    private ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<User>> findAll() {
         var user = repository.findAll();
 
         return ResponseEntity.ok().body(user);
