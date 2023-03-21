@@ -20,7 +20,7 @@ public class UserService {
 
     public ResponseEntity<User> createUser(User data, UriComponentsBuilder uriBuilder) {
         System.out.println(data.getUsername() + "  " + data.getPassword());
-        var user = new User(null, data.getUsername(), data.getUsername(), null);
+        var user = new User(null, data.getUsername(), data.getPassword(), null);
         var uri = uriBuilder.path("/user").buildAndExpand(user.getId()).toUri();
         repository.save(user);
 
