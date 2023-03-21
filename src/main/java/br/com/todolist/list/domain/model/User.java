@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter
+@Setter
 public class User {
 
     @Id
