@@ -2,6 +2,7 @@ package br.com.todolist.list.domain.service;
 
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.UserRepository;
+import br.com.todolist.list.exception.UserException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,6 +33,12 @@ public class UserService {
         return ResponseEntity.ok().body(user);
     }
 
+    public ResponseEntity<User> updateUser(User updateData) {
+        var user = repository.findById(updateData.getId()).orElseThrow(() -> new UserException("id" + updateData.getId() + "not found!"));
+        repository.save(user);
+
+        return ResponseEntity.ok().body(user);
+    }
 
 
 }
