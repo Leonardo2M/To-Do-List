@@ -2,7 +2,8 @@ package br.com.todolist.list.domain.service;
 
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.UserRepository;
-import br.com.todolist.list.dto.user.CreateUserDto;
+import br.com.todolist.list.dto.user.CreateUserDTO;
+import br.com.todolist.list.dto.user.UpdateUserDTO;
 import br.com.todolist.list.dto.user.UserDTO;
 import br.com.todolist.list.exception.UserException;
 import org.modelmapper.ModelMapper;
@@ -23,7 +24,7 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<UserDTO> createUser(CreateUserDto data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<UserDTO> createUser(CreateUserDTO data, UriComponentsBuilder uriBuilder) {
         var user = modelMapper.map(data, User.class);
         System.out.println(user.getId() + " " + user.getUsername() + " " + user.getPassword());
         var uri = uriBuilder.path("/user").buildAndExpand(user.getId()).toUri();
@@ -38,12 +39,12 @@ public class UserService {
         return ResponseEntity.ok().body(user);
     }
 
-    public ResponseEntity<User> updateUser(User updateData) {
-        var user = repository.findById(updateData.getId()).orElseThrow(() -> new UserException("id" + updateData.getId() + "not found!"));
+    public ResponseEntity<UserDTO> updateUser(UpdateUserDTO updateData, Long id) {
+        var user = repository.findById(id).orElseThrow(() -> new UserException("id " + id + " not found!"));
         user.update(updateData);
         repository.save(user);
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(modelMapper.map(user, UserDTO.class));
     }
 
 

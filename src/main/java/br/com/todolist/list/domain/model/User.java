@@ -1,6 +1,6 @@
 package br.com.todolist.list.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.todolist.list.dto.user.UpdateUserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +25,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
 
-    public void update(User updateData) {
+    public void update(UpdateUserDTO updateData) {
         this.password = updateData.getPassword();
     }
 }
