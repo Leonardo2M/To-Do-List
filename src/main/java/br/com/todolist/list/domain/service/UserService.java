@@ -50,6 +50,9 @@ public class UserService {
 
     public ResponseEntity<?> deleteUser(Long id) {
         var user = repository.findById(id).orElseThrow(() -> new UserException("id " + id + " not found!"));
+        if(!user.getTasks().isEmpty()) {
+            throw new UserException("Cannot be deleted user who has tasks in progress!");
+        }
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
