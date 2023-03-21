@@ -35,6 +35,7 @@ public class UserService {
 
     public ResponseEntity<User> updateUser(User updateData) {
         var user = repository.findById(updateData.getId()).orElseThrow(() -> new UserException("id" + updateData.getId() + "not found!"));
+        user.update(updateData);
         repository.save(user);
 
         return ResponseEntity.ok().body(user);

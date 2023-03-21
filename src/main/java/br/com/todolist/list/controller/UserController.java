@@ -4,6 +4,7 @@ import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,5 +29,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         return service.findAll();
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<User> updateUser(@RequestBody User updateData) {
+        return service.updateUser(updateData);
     }
 }
