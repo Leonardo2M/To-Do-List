@@ -36,4 +36,10 @@ public class UserController {
     public ResponseEntity<User> updateUser(@RequestBody User updateData) {
         return service.updateUser(updateData);
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return service.deleteUser(id);
+    }
 }
