@@ -27,7 +27,7 @@ public class UserService {
     public ResponseEntity<UserDTO> createUser(CreateUserDTO data, UriComponentsBuilder uriBuilder) {
         var user = modelMapper.map(data, User.class);
         System.out.println(user.getId() + " " + user.getUsername() + " " + user.getPassword());
-        var uri = uriBuilder.path("/user").buildAndExpand(user.getId()).toUri();
+        var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
         repository.save(user);
 
         return ResponseEntity.created(uri).body(modelMapper.map(user, UserDTO.class));
@@ -38,6 +38,8 @@ public class UserService {
 
         return ResponseEntity.ok().body(user);
     }
+
+
 
     public ResponseEntity<UserDTO> updateUser(UpdateUserDTO updateData, Long id) {
         var user = repository.findById(id).orElseThrow(() -> new UserException("id " + id + " not found!"));
