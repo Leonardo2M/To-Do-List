@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid CreateUserDTO data, UriComponentsBuilder uri) {
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody CreateUserDTO data, UriComponentsBuilder uri) {
         return service.createUser(data, uri);
     }
 

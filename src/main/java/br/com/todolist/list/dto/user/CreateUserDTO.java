@@ -3,6 +3,7 @@ package br.com.todolist.list.dto.user;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class CreateUserDTO {
 
     @NotBlank
-    @Min(3)
+    @Size(min = 3)
     private String username;
     @NotBlank
     @Email
     private String email;
     @NotBlank
-    @Min(6)
+    @Size(min = 6)
     private String password;
 
 }
