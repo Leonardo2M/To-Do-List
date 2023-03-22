@@ -21,7 +21,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private Boolean completed = Boolean.FALSE;
+    private Boolean completed;
     private LocalDateTime date = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
