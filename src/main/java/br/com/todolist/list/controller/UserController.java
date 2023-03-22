@@ -6,6 +6,7 @@ import br.com.todolist.list.dto.user.CreateUserDTO;
 import br.com.todolist.list.dto.user.UpdateUserDTO;
 import br.com.todolist.list.dto.user.UserDTO;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserDTO> create(@RequestBody CreateUserDTO data, UriComponentsBuilder uri) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid CreateUserDTO data, UriComponentsBuilder uri) {
         return service.createUser(data, uri);
     }
 
@@ -35,7 +36,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UpdateUserDTO updateData, @PathVariable Long id) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UpdateUserDTO updateData, @PathVariable Long id) {
         return service.updateUser(updateData, id);
     }
 
