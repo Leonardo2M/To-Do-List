@@ -5,6 +5,7 @@ import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.TaskRepository;
 import br.com.todolist.list.domain.repository.UserRepository;
 import br.com.todolist.list.exception.UserException;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,9 +19,12 @@ public class TaskService {
     private final TaskRepository repository;
     private final UserRepository userRepository;
 
-    public TaskService(TaskRepository repository, UserRepository userRepository) {
+    private final ModelMapper modelMapper;
+
+    public TaskService(TaskRepository repository, UserRepository userRepository, ModelMapper modelMapper) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
     public ResponseEntity<Task> addTask(Task data, Long userId, UriComponentsBuilder uriBuilder){
