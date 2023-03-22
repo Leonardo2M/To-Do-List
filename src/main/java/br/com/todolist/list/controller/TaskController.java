@@ -19,9 +19,9 @@ public class TaskController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Task>> list() {
-        return service.listTasks();
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Task>> list(@PathVariable Long userId) {
+        return service.listTasks(userId);
     }
 
     @PostMapping

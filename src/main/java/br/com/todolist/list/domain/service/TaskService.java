@@ -23,8 +23,8 @@ public class TaskService {
         return ResponseEntity.ok().body(task);
     }
 
-    public ResponseEntity<List<Task>> listTasks() {
-        var tasks = repository.findAll();
+    public ResponseEntity<List<Task>> listTasks(Long userId) {
+        var tasks = repository.findAllByUserIdAndCompletedIsNull(userId);
         return ResponseEntity.ok().body(tasks);
     }
 }
