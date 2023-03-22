@@ -7,6 +7,7 @@ import br.com.todolist.list.domain.repository.UserRepository;
 import br.com.todolist.list.dto.task.CreateTaskDTO;
 import br.com.todolist.list.dto.task.TaskDTO;
 import br.com.todolist.list.dto.task.UpdateTaskDTO;
+import br.com.todolist.list.exception.TaskException;
 import br.com.todolist.list.exception.UserException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -46,10 +48,16 @@ public class TaskService {
         return ResponseEntity.ok().body(tasks);
     }
 
-    public ResponseEntity<TaskDTO> updateTask(UpdateTaskDTO data, Long userId) {
-        var task = repository.findByIdAndUserId(data.getId(), userId);
+    public ResponseEntity<TaskDTO> updateTask(UpdateTaskDTO data, Long id) {
+        var task = repository.findById(id).orElseThrow(() -> new TaskException("id " + id + " not found!"));
         task.update(data.getDescription());
         repository.save(task);
         return ResponseEntity.ok().body(modelMapper.map(task, TaskDTO.class));
+    }
+
+    public ResponseEntity<?> deleteTask(Long id) {
+        var task = repository.findByIdAndCompletedIsFalse(id).orElseThrow(() -> new TaskException("id " + id + " not found!"));
+        task.completed();
+        return ResponseEntity.noContent().build();
     }
 }

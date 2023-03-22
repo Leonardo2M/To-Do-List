@@ -30,4 +30,8 @@ public class Task {
     public void update(String description) {
         this.description = description;
     }
+
+    public void completed() {
+        this.completed = Boolean.TRUE;
+    }
 }

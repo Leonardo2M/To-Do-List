@@ -5,6 +5,7 @@ import br.com.todolist.list.domain.service.TaskService;
 import br.com.todolist.list.dto.task.CreateTaskDTO;
 import br.com.todolist.list.dto.task.TaskDTO;
 import br.com.todolist.list.dto.task.UpdateTaskDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,12 +28,20 @@ public class TaskController {
     }
 
     @PostMapping("/{userId}")
+    @Transactional
     public ResponseEntity<TaskDTO> addNewTask(@RequestBody CreateTaskDTO data, @PathVariable Long userId, UriComponentsBuilder uri) {
         return service.addTask(data, userId, uri);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<TaskDTO> updateTask(@RequestBody UpdateTaskDTO data, @PathVariable Long userId) {
-        return service.updateTask(data, userId);
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TaskDTO> updateTask(@RequestBody UpdateTaskDTO data, @PathVariable Long id) {
+        return service.updateTask(data, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
+        return service.deleteTask(id);
     }
 }

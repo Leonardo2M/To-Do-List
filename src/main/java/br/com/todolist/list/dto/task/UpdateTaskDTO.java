@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateTaskDTO {
-
-    private Long id;
     private String description;
 
 }
