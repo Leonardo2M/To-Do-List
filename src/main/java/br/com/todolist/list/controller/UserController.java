@@ -3,6 +3,7 @@ package br.com.todolist.list.controller;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.UserService;
 import br.com.todolist.list.dto.user.CreateUserDTO;
+import br.com.todolist.list.dto.user.ListUserDTO;
 import br.com.todolist.list.dto.user.UpdateUserDTO;
 import br.com.todolist.list.dto.user.UserDTO;
 import jakarta.transaction.Transactional;
@@ -30,8 +31,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<ListUserDTO>> findAll() {
         return service.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
+        return service.findById(id);
     }
 
     @PutMapping("/{id}")

@@ -3,6 +3,7 @@ package br.com.todolist.list.domain.service;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.UserRepository;
 import br.com.todolist.list.dto.user.CreateUserDTO;
+import br.com.todolist.list.dto.user.ListUserDTO;
 import br.com.todolist.list.dto.user.UpdateUserDTO;
 import br.com.todolist.list.dto.user.UserDTO;
 import br.com.todolist.list.exception.UserException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -33,12 +35,17 @@ public class UserService {
         return ResponseEntity.created(uri).body(modelMapper.map(user, UserDTO.class));
     }
 
-    public ResponseEntity<List<User>> findAll() {
-        var user = repository.findAll();
+    public ResponseEntity<List<ListUserDTO>> findAll() {
+        var users = repository.findAll().stream().map(u -> modelMapper.map(u, ListUserDTO.class)).toList();
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(users);
     }
 
+    public ResponseEntity<UserDTO> findById(Long id) {
+        var user = repository.findById(id).orElseThrow(() -> new UserException("id " + id + "not found!"));
+
+        return ResponseEntity.ok().body(modelMapper.map(user, UserDTO.class));
+    }
 
 
     public ResponseEntity<UserDTO> updateUser(UpdateUserDTO updateData, Long id) {
@@ -59,4 +66,6 @@ public class UserService {
 
         return ResponseEntity.noContent().build();
     }
+
+
 }
