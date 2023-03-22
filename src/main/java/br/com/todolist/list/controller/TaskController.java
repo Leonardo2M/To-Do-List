@@ -3,6 +3,7 @@ package br.com.todolist.list.controller;
 import br.com.todolist.list.domain.model.Task;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.TaskService;
+import br.com.todolist.list.dto.task.TaskDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,7 +27,7 @@ public class TaskController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Task> addNewTask(@RequestBody Task data, @PathVariable Long userId, UriComponentsBuilder uri) {
+    public ResponseEntity<TaskDTO> addNewTask(@RequestBody Task data, @PathVariable Long userId, UriComponentsBuilder uri) {
         return service.addTask(data, userId, uri);
     }
 

@@ -4,6 +4,7 @@ import br.com.todolist.list.domain.model.Task;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.TaskRepository;
 import br.com.todolist.list.domain.repository.UserRepository;
+import br.com.todolist.list.dto.task.TaskDTO;
 import br.com.todolist.list.exception.UserException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,13 @@ public class TaskService {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<Task> addTask(Task data, Long userId, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<TaskDTO> addTask(Task data, Long userId, UriComponentsBuilder uriBuilder){
         var user = userRepository.findById(userId).orElseThrow(() -> new UserException("id " + userId + " not found!"));
-        var task = new Task(null, data.getDescription(), null, LocalDateTime.now(), user);
+        var task = modelMapper.map(data, Task.class);
+        task.setUser(user);
         var uri = uriBuilder.path("todo/{id}").buildAndExpand(task.getId()).toUri();
         repository.save(task);
-        return ResponseEntity.created(uri).body(task);
+        return ResponseEntity.created(uri).body(modelMapper.map(task, TaskDTO.class));
     }
 
     public ResponseEntity<List<Task>> listTasks(Long userId) {
