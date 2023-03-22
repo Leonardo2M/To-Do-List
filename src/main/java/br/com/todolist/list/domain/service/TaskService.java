@@ -4,6 +4,7 @@ import br.com.todolist.list.domain.model.Task;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.TaskRepository;
 import br.com.todolist.list.domain.repository.UserRepository;
+import br.com.todolist.list.exception.UserException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class TaskService {
     }
 
     public ResponseEntity<List<Task>> listTasks(Long userId) {
+        if(!userRepository.existsById(userId)) {
+            throw new UserException("id " + userId + " not found!");
+        }
         var tasks = repository.findAllByUserIdAndCompletedIsNull(userId);
         return ResponseEntity.ok().body(tasks);
     }
