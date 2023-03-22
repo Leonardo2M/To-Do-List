@@ -1,6 +1,5 @@
 package br.com.todolist.list.controller;
 
-import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.UserService;
 import br.com.todolist.list.dto.user.CreateUserDTO;
 import br.com.todolist.list.dto.user.ListUserDTO;
