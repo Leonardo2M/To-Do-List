@@ -1,7 +1,9 @@
 package br.com.todolist.list.domain.service;
 
 import br.com.todolist.list.domain.model.Task;
+import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.TaskRepository;
+import br.com.todolist.list.domain.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository repository;
+    private final UserRepository userRepository;
 
-    public TaskService(TaskRepository repository) {
+    public TaskService(TaskRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public ResponseEntity<Task> addTask(Task data){
