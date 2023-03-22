@@ -27,4 +27,7 @@ public class Task {
     @JsonIgnore
     private User user;
 
+    public void update(String description) {
+        this.description = description;
+    }
 }

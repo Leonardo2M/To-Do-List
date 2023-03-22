@@ -4,7 +4,9 @@ import br.com.todolist.list.domain.model.Task;
 import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.repository.TaskRepository;
 import br.com.todolist.list.domain.repository.UserRepository;
+import br.com.todolist.list.dto.task.CreateTaskDTO;
 import br.com.todolist.list.dto.task.TaskDTO;
+import br.com.todolist.list.dto.task.UpdateTaskDTO;
 import br.com.todolist.list.exception.UserException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +30,9 @@ public class TaskService {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<TaskDTO> addTask(Task data, Long userId, UriComponentsBuilder uriBuilder){
-        var user = userRepository.findById(userId).orElseThrow(() -> new UserException("id " + userId + " not found!"));
+    public ResponseEntity<TaskDTO> addTask(CreateTaskDTO data, Long userId, UriComponentsBuilder uriBuilder){
         var task = modelMapper.map(data, Task.class);
-        task.setUser(user);
+        task.setUser(userRepository.findById(userId).orElseThrow(() -> new UserException("id " + userId + " not found!")));
         var uri = uriBuilder.path("todo/{id}").buildAndExpand(task.getId()).toUri();
         repository.save(task);
         return ResponseEntity.created(uri).body(modelMapper.map(task, TaskDTO.class));
@@ -43,5 +44,12 @@ public class TaskService {
         }
         var tasks = repository.findAllByUserIdAndCompletedIsFalse(userId);
         return ResponseEntity.ok().body(tasks);
+    }
+
+    public ResponseEntity<TaskDTO> updateTask(UpdateTaskDTO data, Long userId) {
+        var task = repository.findByIdAndUserId(data.getId(), userId);
+        task.update(data.getDescription());
+        repository.save(task);
+        return ResponseEntity.ok().body(modelMapper.map(task, TaskDTO.class));
     }
 }

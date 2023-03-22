@@ -1,14 +1,14 @@
 package br.com.todolist.list.controller;
 
 import br.com.todolist.list.domain.model.Task;
-import br.com.todolist.list.domain.model.User;
 import br.com.todolist.list.domain.service.TaskService;
+import br.com.todolist.list.dto.task.CreateTaskDTO;
 import br.com.todolist.list.dto.task.TaskDTO;
+import br.com.todolist.list.dto.task.UpdateTaskDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,8 +27,12 @@ public class TaskController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<TaskDTO> addNewTask(@RequestBody Task data, @PathVariable Long userId, UriComponentsBuilder uri) {
+    public ResponseEntity<TaskDTO> addNewTask(@RequestBody CreateTaskDTO data, @PathVariable Long userId, UriComponentsBuilder uri) {
         return service.addTask(data, userId, uri);
     }
 
+    @PutMapping("/{userId}")
+    public ResponseEntity<TaskDTO> updateTask(@RequestBody UpdateTaskDTO data, @PathVariable Long userId) {
+        return service.updateTask(data, userId);
+    }
 }
